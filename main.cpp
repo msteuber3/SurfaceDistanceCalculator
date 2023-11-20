@@ -91,14 +91,31 @@ int calculateSurfaceDistance(vector<vector<int>> heightData, vector<int>coordOne
  * Parameters - Two distance values
  * Returns - Difference between the two values
  */
+int comparePreAndPost(int preEruption, int postEruption){
+    return postEruption - preEruption;
+}
+int main() {
 
- int main() {
-    vector<vector<int>> heightData = writeFile("/Users/michael/Documents/Programming/SurfaceDistanceCalculator/pre.data");
-    vector<int> one {0, 1};
-    vector<int> two {6, 4};
-    int surfaceTest = calculateSurfaceDistance(heightData, one, two);
+    vector<int> xCoords(2);
+    vector<int> yCoords(2);
+    printf("%s", "Enter x1 coordinate:");
+    cin >> xCoords[0];
+    printf("%s", "Enter x2 coordinate:");
+    cin >> xCoords[1];
+    printf("%s", "Enter y1 coordinate:");
+    cin >> yCoords[0];
+    printf("%s", "Enter y2 coordinate:");
+    cin >> yCoords[1];
 
-    cout<< surfaceTest << "\n";
+
+    vector<vector<int>> heightDataPre = writeFile("/Users/michael/Documents/Programming/SurfaceDistanceCalculator/pre.data");
+    vector<vector<int>> heightDataPost = writeFile("/Users/michael/Documents/Programming/SurfaceDistanceCalculator/post.data");
+    int surfaceDistancePre = calculateSurfaceDistance(heightDataPre, xCoords, yCoords);
+    int surfaceDistancePost = calculateSurfaceDistance(heightDataPost, xCoords, yCoords);
+    int changeInDistance = comparePreAndPost(surfaceDistancePre, surfaceDistancePost);
+
+    cout<< "There was a " << changeInDistance << " meter change in the distance bewtween the two coordinates before and after the eruption" << "\n";
+
 
 //        for(int i = 0; i < heightData.size(); i++){
 //        for(int j = 0; j < heightData[0].size(); j++){
@@ -109,4 +126,4 @@ int calculateSurfaceDistance(vector<vector<int>> heightData, vector<int>coordOne
 //    }
     return 0;
 
- }
+}
