@@ -28,8 +28,9 @@ vector<vector<int>> writeFile(const char* filePath){
 /* TODO - Compute distance from point A to point B
  * Parameters - Height values vector, two sets of coordinates (x, y) provided by user
  * Returns - Surface distance in meters
+ * Document this further
  */
-vector<pair<int, int>> calculateSurfaceDistance(vector<vector<int>> heightData, vector<int>coordOne, vector<int>coordTwo){
+int calculateSurfaceDistance(vector<vector<int>> heightData, vector<int>coordOne, vector<int>coordTwo){
     vector<pair<int, int>> heightsInPath;
     int x = coordOne[0];
     int y = coordOne[1];
@@ -68,7 +69,21 @@ vector<pair<int, int>> calculateSurfaceDistance(vector<vector<int>> heightData, 
             y++;
         }
     }
-    return heightsInPath;
+
+    int surfaceHeightDistance = 0;
+    int currentx;
+    int currenty;
+    int previousx = 0;
+    int previousy = 0;
+    for(auto & i : heightsInPath){
+        currentx = i.first;
+        currenty = i.second;
+        surfaceHeightDistance += (abs(heightData[currentx][currenty] - heightData[previousx][previousy]) * 11);
+        previousx = currentx;
+        previousy = currenty;
+        surfaceHeightDistance += 30;
+    }
+    return surfaceHeightDistance;
 }
 
 
@@ -81,14 +96,11 @@ vector<pair<int, int>> calculateSurfaceDistance(vector<vector<int>> heightData, 
     vector<vector<int>> heightData = writeFile("/Users/michael/Documents/Programming/SurfaceDistanceCalculator/pre.data");
     vector<int> one {0, 1};
     vector<int> two {6, 4};
-    vector<pair<int, int>> surfaceTest = calculateSurfaceDistance(heightData, one, two);
+    int surfaceTest = calculateSurfaceDistance(heightData, one, two);
 
-        for (auto iter = surfaceTest.begin(); iter != surfaceTest.end(); iter++)
-        {
-            cout << iter->first << iter->second << endl;
-        }
-    cout << floor(3.00) << endl;
-    //    for(int i = 0; i < heightData.size(); i++){
+    cout<< surfaceTest << "\n";
+
+//        for(int i = 0; i < heightData.size(); i++){
 //        for(int j = 0; j < heightData[0].size(); j++){
 //            printf("%i",heightData[i][j]);
 //            printf("%s", " ");
