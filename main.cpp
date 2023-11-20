@@ -1,15 +1,30 @@
+/* Michael Steuber
+ * 11/20/2023
+ *
+ * SurfaceDistanceCalculator - Calculates the difference in the surface distance between two coordinates provided by user
+ * before and after the eruption of Mount St. Helens
+ */
 #include <iostream>
 #include<fstream>
 using namespace std;
 
 //TODO - Document this function properly
 vector<vector<int>> writeFile(const char* filePath){
+    /* Opens a file and writes its contents to a 2D vector
+     * Parameters -
+     *      filePath - the path to the file to open
+     *
+     * Returns -
+     *      A 2D vector heightData which contains the integer representations of the height
+     * values in the raw data files
+     */
+
     fstream fileIn(filePath);
     if(!filePath){
         perror("Error: Could not open file");
     }
     int col = 512;
-    int row = 512; //Consider basing this on the size of the image files
+    int row = 512;
     vector<vector<int>> heightData(col, vector<int>(row));
 
 
@@ -25,12 +40,16 @@ vector<vector<int>> writeFile(const char* filePath){
 }
 
 
-/* TODO - Compute distance from point A to point B
- * Parameters - Height values vector, two sets of coordinates (x, y) provided by user
- * Returns - Surface distance in meters
- * Document this further
- */
 int calculateSurfaceDistance(vector<vector<int>> heightData, vector<int>coordOne, vector<int>coordTwo){
+    /* Calculates a list of coordinates between two points using Bresenham's line algorithm and uses that list and the
+     * 2D vector provided by the raw data files to determine the surface distance between the two points
+     * Parameters -
+     *      heightData - 2D vector of height data
+     *      coordOne - Beginning coordinates provided by user
+     *      coordTwo - End coordinates provided by user
+     * Returns -
+     *      Surface distance in meters as an integer
+     */
     vector<pair<int, int>> heightsInPath;
     int x = coordOne[0];
     int y = coordOne[1];
@@ -87,43 +106,40 @@ int calculateSurfaceDistance(vector<vector<int>> heightData, vector<int>coordOne
 }
 
 
-/* TODO - Calculate difference in surface distance between pre and post eruption data
- * Parameters - Two distance values
- * Returns - Difference between the two values
- */
 int comparePreAndPost(int preEruption, int postEruption){
-    return postEruption - preEruption;
+    /* Parameters -
+     *      preEruption - int of the surface distance between two points before the eruption
+     *      postEruption - int of the surface distance between two points after the eruption
+     * Returns -
+     *      Difference between the two distances
+    */
+    return abs(postEruption - preEruption);
 }
 int main() {
 
-    vector<int> xCoords(2);
-    vector<int> yCoords(2);
+    vector<int> startCoords(2);
+    vector<int> endCoords(2);
     printf("%s", "Enter x1 coordinate:");
-    cin >> xCoords[0];
-    printf("%s", "Enter x2 coordinate:");
-    cin >> xCoords[1];
+    cin >> startCoords[0];
     printf("%s", "Enter y1 coordinate:");
-    cin >> yCoords[0];
+    cin >> startCoords[1];
+    printf("%s", "Enter x2 coordinate:");
+    cin >> endCoords[0];
     printf("%s", "Enter y2 coordinate:");
-    cin >> yCoords[1];
+    cin >> endCoords[1];
 
 
     vector<vector<int>> heightDataPre = writeFile("/Users/michael/Documents/Programming/SurfaceDistanceCalculator/pre.data");
     vector<vector<int>> heightDataPost = writeFile("/Users/michael/Documents/Programming/SurfaceDistanceCalculator/post.data");
-    int surfaceDistancePre = calculateSurfaceDistance(heightDataPre, xCoords, yCoords);
-    int surfaceDistancePost = calculateSurfaceDistance(heightDataPost, xCoords, yCoords);
+    int surfaceDistancePre = calculateSurfaceDistance(heightDataPre, startCoords, endCoords);
+    int surfaceDistancePost = calculateSurfaceDistance(heightDataPost, startCoords, endCoords);
     int changeInDistance = comparePreAndPost(surfaceDistancePre, surfaceDistancePost);
+    cout << "Surface distance pre-eruption: " << surfaceDistancePre << "\n";
+    cout << "Surface distance post-eruption: " << surfaceDistancePost << "\n";
+
 
     cout<< "There was a " << changeInDistance << " meter change in the distance bewtween the two coordinates before and after the eruption" << "\n";
 
-
-//        for(int i = 0; i < heightData.size(); i++){
-//        for(int j = 0; j < heightData[0].size(); j++){
-//            printf("%i",heightData[i][j]);
-//            printf("%s", " ");
-//        }
-//        printf("%s","\n");
-//    }
     return 0;
 
 }
