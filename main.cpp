@@ -114,18 +114,28 @@ int comparePreAndPost(int preEruption, int postEruption){
     */
     return abs(postEruption - preEruption);
 }
+
+int userIn(){
+    int input;
+    cin >> input;
+    while(!((input <= 512) && (input >= 0))){
+        printf("%s", "Invalid input. Please enter an integer between 0 and 512, inclusive: ");
+        cin >> input;
+    }
+    return input;
+}
 int main() {
 
     vector<int> startCoords(2);
     vector<int> endCoords(2);
     printf("%s", "Enter x1 coordinate:");
-    cin >> startCoords[0];
+    startCoords[0] = userIn();
     printf("%s", "Enter y1 coordinate:");
-    cin >> startCoords[1];
+    startCoords[1] = userIn();
     printf("%s", "Enter x2 coordinate:");
-    cin >> endCoords[0];
+    endCoords[0] = userIn();
     printf("%s", "Enter y2 coordinate:");
-    cin >> endCoords[1];
+    endCoords[1] = userIn();
 
 
     vector<vector<int>> heightDataPre = writeFile("../pre.data");
