@@ -32,8 +32,7 @@ int main() {
     cout << "Surface distance pre-eruption: " << surfaceDistancePre << "\n";
     cout << "Surface distance post-eruption: " << surfaceDistancePost << "\n";
 
-
-    cout<< "There was a " << changeInDistance << " meter change in the distance between the two coordinates before and after the eruption" << "\n";
+    printf("There was a %i meter change in the distance between (%i, %i) and (%i, %i) after the eruption.", changeInDistance, startCoords[0], startCoords[1], endCoords[0], endCoords[1]);
 
     return 0;
 
