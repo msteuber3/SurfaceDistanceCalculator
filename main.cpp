@@ -129,8 +129,8 @@ int main() {
     cin >> endCoords[1];
 
 
-    vector<vector<int>> heightDataPre = writeFile("./pre.data");
-    vector<vector<int>> heightDataPost = writeFile("./post.data");
+    vector<vector<int>> heightDataPre = writeFile("../pre.data");
+    vector<vector<int>> heightDataPost = writeFile("../post.data");
     int surfaceDistancePre = calculateSurfaceDistance(heightDataPre, startCoords, endCoords);
     int surfaceDistancePost = calculateSurfaceDistance(heightDataPost, startCoords, endCoords);
     int changeInDistance = comparePreAndPost(surfaceDistancePre, surfaceDistancePost);
