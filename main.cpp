@@ -8,7 +8,6 @@
 #include<fstream>
 using namespace std;
 
-//TODO - Document this function properly
 vector<vector<int>> writeFile(const char* filePath){
     /* Opens a file and writes its contents to a 2D vector
      * Parameters -
